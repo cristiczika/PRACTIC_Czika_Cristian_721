@@ -5,6 +5,7 @@ import repository.EventRepository;
 import repository.FineRepository;
 import repository.VehicleRepository;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class ControllerService {
@@ -33,6 +34,10 @@ public class ControllerService {
 
     public List<Vehicle> filterByVehicleTypeAndStatus(VehicleType type, VehicleStatus status) {
         return vehicleRepository.getAllVehicles().stream().filter(v -> v.getType().equals(type) && v.getStatus().equals(status)).toList();
+    }
+
+    public List<Vehicle> sortByOwnerCity() {
+        return vehicleRepository.getAllVehicles().stream().sorted(Comparator.comparing(Vehicle::getOwnerCity).thenComparingInt(Vehicle::getId)).toList();
     }
 
 }

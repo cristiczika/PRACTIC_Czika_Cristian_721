@@ -18,9 +18,11 @@ public class ConsoleController {
     public void run() {
         subpunct1();
         subpunct2();
+        subpunct3();
     }
 
     private void subpunct1() {
+        System.out.println("\n===== Unterpunkt 1 =====");
         List<Vehicle> vehicles = controllerService.getAllVehicles();
         List<Event> events = controllerService.getAllEvents();
         List<Fine> fines = controllerService.getAllFines();
@@ -33,12 +35,18 @@ public class ConsoleController {
     }
 
     private void subpunct2() {
+        System.out.println("\n===== Unterpunkt 2 =====");
         System.out.print("Vehicle Type: ");
-        VehicleType type = VehicleType.valueOf(scanner.nextLine());
+        VehicleType type = VehicleType.valueOf(scanner.nextLine().toUpperCase());
         System.out.print("Vehicle Status: ");
-        VehicleStatus status = VehicleStatus.valueOf(scanner.nextLine());
+        VehicleStatus status = VehicleStatus.valueOf(scanner.nextLine().toUpperCase());
 
         controllerService.filterByVehicleTypeAndStatus(type, status).forEach(System.out::println);
+    }
+
+    private void subpunct3() {
+        System.out.println("\n===== Unterpunkt 3 =====");
+        controllerService.sortByOwnerCity().forEach(System.out::println);
     }
 
 }
