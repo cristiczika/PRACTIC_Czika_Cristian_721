@@ -36,7 +36,7 @@ public class ControllerService {
     }
 
     public List<Vehicle> sortByOwnerCity() {
-        return vehicleRepository.getAllVehicles().stream().sorted(Comparator.comparing(Vehicle::getOwnerCity).thenComparingInt(Vehicle::getId)).toList();
+        return vehicleRepository.getAllVehicles().stream().sorted(Comparator.comparing(Vehicle::getOwnerCity).reversed().thenComparingInt(Vehicle::getId).reversed()).toList();
     }
 
     public void saveVehicles() {
@@ -66,19 +66,12 @@ public class ControllerService {
         }
 
         for (Vehicle v : vehicles) {
-            int score =
-                    eventScore.getOrDefault(v.getId(), 0)
-                            - fineAmounts.getOrDefault(v.getId(), 0);
+            int score = eventScore.getOrDefault(v.getId(), 0) - fineAmounts.getOrDefault(v.getId(), 0);
 
             totalScores.put(v, score);
         }
 
-        return totalScores.entrySet().stream()
-                .sorted(
-                        Map.Entry.<Vehicle, Integer>comparingByValue()
-                )
-                .limit(5)
-                .toList();
+        return totalScores.entrySet().stream().sorted(Map.Entry.<Vehicle, Integer>comparingByValue()).limit(5).toList();
 
     }
 
@@ -90,9 +83,7 @@ public class ControllerService {
             count.put(e.getType(), count.getOrDefault(e.getType(), 0) + 1);
         }
 
-        Map<EventType, Integer> sortedCount = count.entrySet()
-                .stream()
-                .sorted(Map.Entry.<EventType, Integer>comparingByValue().reversed())
+        Map<EventType, Integer> sortedCount = count.entrySet().stream().sorted(Map.Entry.<EventType, Integer>comparingByValue().reversed())
                 .collect(
                         LinkedHashMap::new,
                         (m, e) -> m.put(e.getKey(), e.getValue()),

@@ -90,6 +90,7 @@ public class ConsoleController {
     }
 
     private void subpunct7() {
+        System.out.println("\n===== Unterpunkt 7 =====");
         controllerService.calculateReport();
     }
 
