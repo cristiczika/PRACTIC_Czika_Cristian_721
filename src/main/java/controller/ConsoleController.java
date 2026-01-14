@@ -20,6 +20,7 @@ public class ConsoleController {
         subpunct2();
         subpunct3();
         subpunct4();
+        subpunct5();
     }
 
     private void subpunct1() {
@@ -51,7 +52,18 @@ public class ConsoleController {
     }
 
     private void subpunct4() {
+        System.out.println("\n===== Unterpunkt 4 =====");
         controllerService.saveVehicles();
+    }
+
+    private void subpunct5() {
+        System.out.println("\n===== Unterpunkt 5 =====");
+        List<Event> events = controllerService.getAllEvents();
+
+        for (int i = 0; i < 5; i++) {
+            int riskScore = controllerService.calculateRiskScore(events.get(i));
+            System.out.println("Event " + (i+1) + " -> severity=" + events.get(i).getSeverity() + " -> riskScore=" + riskScore);
+        }
     }
 
 }

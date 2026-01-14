@@ -44,4 +44,13 @@ public class ControllerService {
         vehicleRepository.saveVehicles(sortByOwnerCity());
     }
 
+    public int calculateRiskScore(Event e) {
+        return switch (e.getType()) {
+            case SPEEDING -> e.getSeverity() * 2;
+            case RED_LIGHT -> e.getSeverity() * 3;
+            case ACCIDENT -> e.getSeverity() * 5;
+            case PRIORITY_PASS -> e.getSeverity() * 1;
+        };
+    }
+
 }
