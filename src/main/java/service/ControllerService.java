@@ -6,7 +6,9 @@ import repository.FineRepository;
 import repository.VehicleRepository;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ControllerService {
 
@@ -51,6 +53,36 @@ public class ControllerService {
             case ACCIDENT -> e.getSeverity() * 5;
             case PRIORITY_PASS -> e.getSeverity() * 1;
         };
+    }
+
+    public List<Map.Entry<Vehicle, Integer>> getTotalRisks(List<Vehicle> vehicles, List<Event> events, List<Fine> fines) {
+        Map<Vehicle, Integer> totalScores = new HashMap<>();
+
+        Map<Integer, Integer> eventScore = new HashMap<>();
+        for (Event e : events) {
+            eventScore.merge(e.getVehicleId(), calculateRiskScore(e), Integer::sum);
+        }
+
+        Map<Integer, Integer> fineAmounts = new HashMap<>();
+        for (Fine f : fines) {
+            fineAmounts.merge(f.getVehicleId(), f.getAmount(), Integer::sum);
+        }
+
+        for (Vehicle v : vehicles) {
+            int score =
+                    eventScore.getOrDefault(v.getId(), 0)
+                            - fineAmounts.getOrDefault(v.getId(), 0);
+
+            totalScores.put(v, score);
+        }
+
+        return totalScores.entrySet().stream()
+                .sorted(
+                        Map.Entry.<Vehicle, Integer>comparingByValue()
+                )
+                .limit(5)
+                .toList();
+
     }
 
 }

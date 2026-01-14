@@ -4,6 +4,7 @@ import model.*;
 import service.ControllerService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ConsoleController {
@@ -21,6 +22,7 @@ public class ConsoleController {
         subpunct3();
         subpunct4();
         subpunct5();
+        subpunct6();
     }
 
     private void subpunct1() {
@@ -64,6 +66,26 @@ public class ConsoleController {
             int riskScore = controllerService.calculateRiskScore(events.get(i));
             System.out.println("Event " + (i+1) + " -> severity=" + events.get(i).getSeverity() + " -> riskScore=" + riskScore);
         }
+    }
+
+    private void subpunct6() {
+        System.out.println("\n===== Unterpunkt 6 =====");
+        List<Vehicle> vehicles = controllerService.getAllVehicles();
+        List<Event> events = controllerService.getAllEvents();
+        List<Fine> fines = controllerService.getAllFines();
+
+        List<Map.Entry<Vehicle, Integer>> ranking =
+                controllerService.getTotalRisks(vehicles, events, fines);
+
+        System.out.println("Top 5 Vehicles:");
+        int pos = 1;
+        for (var entry : ranking) {
+            Vehicle v = entry.getKey();
+            System.out.println(pos++ + ". " +
+                    v.getLicensePlate() + " -> " + entry.getValue());
+        }
+
+        System.out.println("\nSafest vehicle: " + ranking.get(0).getKey().getLicensePlate() + " -> " + ranking.get(0).getValue());
     }
 
 }
