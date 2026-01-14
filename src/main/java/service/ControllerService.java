@@ -1,8 +1,6 @@
 package service;
 
-import model.Event;
-import model.Fine;
-import model.Vehicle;
+import model.*;
 import repository.EventRepository;
 import repository.FineRepository;
 import repository.VehicleRepository;
@@ -31,6 +29,10 @@ public class ControllerService {
 
     public List<Fine> getAllFines() {
         return fineRepository.getAllFines();
+    }
+
+    public List<Vehicle> filterByVehicleTypeAndStatus(VehicleType type, VehicleStatus status) {
+        return vehicleRepository.getAllVehicles().stream().filter(v -> v.getType().equals(type) && v.getStatus().equals(status)).toList();
     }
 
 }

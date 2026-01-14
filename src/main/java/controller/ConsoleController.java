@@ -1,8 +1,6 @@
 package controller;
 
-import model.Event;
-import model.Fine;
-import model.Vehicle;
+import model.*;
 import service.ControllerService;
 
 import java.util.List;
@@ -19,6 +17,7 @@ public class ConsoleController {
 
     public void run() {
         subpunct1();
+        subpunct2();
     }
 
     private void subpunct1() {
@@ -31,6 +30,15 @@ public class ConsoleController {
         System.out.println("Fines loaded: " + fines.size() + "\n");
 
         vehicles.forEach(System.out::println);
+    }
+
+    private void subpunct2() {
+        System.out.print("Vehicle Type: ");
+        VehicleType type = VehicleType.valueOf(scanner.nextLine());
+        System.out.print("Vehicle Status: ");
+        VehicleStatus status = VehicleStatus.valueOf(scanner.nextLine());
+
+        controllerService.filterByVehicleTypeAndStatus(type, status).forEach(System.out::println);
     }
 
 }
