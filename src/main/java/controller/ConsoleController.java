@@ -23,6 +23,7 @@ public class ConsoleController {
         subpunct4();
         subpunct5();
         subpunct6();
+        subpunct7();
     }
 
     private void subpunct1() {
@@ -86,6 +87,10 @@ public class ConsoleController {
         }
 
         System.out.println("\nSafest vehicle: " + ranking.get(0).getKey().getLicensePlate() + " -> " + ranking.get(0).getValue());
+    }
+
+    private void subpunct7() {
+        controllerService.calculateReport();
     }
 
 }

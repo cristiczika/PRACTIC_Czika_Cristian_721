@@ -5,10 +5,7 @@ import repository.EventRepository;
 import repository.FineRepository;
 import repository.VehicleRepository;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ControllerService {
 
@@ -83,6 +80,26 @@ public class ControllerService {
                 .limit(5)
                 .toList();
 
+    }
+
+    public void calculateReport() {
+        Map<EventType, Integer> count = new HashMap<>();
+        List<Event> events = eventRepository.getAllEvents();
+
+        for (Event e : events) {
+            count.put(e.getType(), count.getOrDefault(e.getType(), 0) + 1);
+        }
+
+        Map<EventType, Integer> sortedCount = count.entrySet()
+                .stream()
+                .sorted(Map.Entry.<EventType, Integer>comparingByValue().reversed())
+                .collect(
+                        LinkedHashMap::new,
+                        (m, e) -> m.put(e.getKey(), e.getValue()),
+                        LinkedHashMap::putAll
+                );
+
+        eventRepository.saveReport(sortedCount);
     }
 
 }
