@@ -7,13 +7,13 @@ import repository.VehicleRepository;
 
 import java.util.*;
 
-public class ControllerService {
+public class CityService {
 
     private final VehicleRepository vehicleRepository;
     private final EventRepository eventRepository;
     private final FineRepository fineRepository;
 
-    public ControllerService(VehicleRepository vehicleRepository, EventRepository eventRepository, FineRepository fineRepository) {
+    public CityService(VehicleRepository vehicleRepository, EventRepository eventRepository, FineRepository fineRepository) {
         this.vehicleRepository = vehicleRepository;
         this.eventRepository = eventRepository;
         this.fineRepository = fineRepository;

@@ -1,7 +1,7 @@
 package controller;
 
 import model.*;
-import service.ControllerService;
+import service.CityService;
 
 import java.util.List;
 import java.util.Map;
@@ -9,11 +9,11 @@ import java.util.Scanner;
 
 public class ConsoleController {
 
-    private final ControllerService controllerService;
+    private final CityService cityService;
     private final Scanner scanner = new Scanner(System.in);
 
-    public ConsoleController(ControllerService controllerService) {
-        this.controllerService = controllerService;
+    public ConsoleController(CityService cityService) {
+        this.cityService = cityService;
     }
 
     public void run() {
@@ -28,9 +28,9 @@ public class ConsoleController {
 
     private void subpunct1() {
         System.out.println("\n===== Unterpunkt 1 =====");
-        List<Vehicle> vehicles = controllerService.getAllVehicles();
-        List<Event> events = controllerService.getAllEvents();
-        List<Fine> fines = controllerService.getAllFines();
+        List<Vehicle> vehicles = cityService.getAllVehicles();
+        List<Event> events = cityService.getAllEvents();
+        List<Fine> fines = cityService.getAllFines();
 
         System.out.println("Vehicles loaded: " + vehicles.size());
         System.out.println("Events loaded: " + events.size());
@@ -46,37 +46,37 @@ public class ConsoleController {
         System.out.print("Vehicle Status: ");
         VehicleStatus status = VehicleStatus.valueOf(scanner.nextLine().toUpperCase());
 
-        controllerService.filterByVehicleTypeAndStatus(type, status).forEach(System.out::println);
+        cityService.filterByVehicleTypeAndStatus(type, status).forEach(System.out::println);
     }
 
     private void subpunct3() {
         System.out.println("\n===== Unterpunkt 3 =====");
-        controllerService.sortByOwnerCity().forEach(System.out::println);
+        cityService.sortByOwnerCity().forEach(System.out::println);
     }
 
     private void subpunct4() {
         System.out.println("\n===== Unterpunkt 4 =====");
-        controllerService.saveVehicles();
+        cityService.saveVehicles();
     }
 
     private void subpunct5() {
         System.out.println("\n===== Unterpunkt 5 =====");
-        List<Event> events = controllerService.getAllEvents();
+        List<Event> events = cityService.getAllEvents();
 
         for (int i = 0; i < 5; i++) {
-            int riskScore = controllerService.calculateRiskScore(events.get(i));
+            int riskScore = cityService.calculateRiskScore(events.get(i));
             System.out.println("Event " + (i+1) + " -> severity=" + events.get(i).getSeverity() + " -> riskScore=" + riskScore);
         }
     }
 
     private void subpunct6() {
         System.out.println("\n===== Unterpunkt 6 =====");
-        List<Vehicle> vehicles = controllerService.getAllVehicles();
-        List<Event> events = controllerService.getAllEvents();
-        List<Fine> fines = controllerService.getAllFines();
+        List<Vehicle> vehicles = cityService.getAllVehicles();
+        List<Event> events = cityService.getAllEvents();
+        List<Fine> fines = cityService.getAllFines();
 
         List<Map.Entry<Vehicle, Integer>> ranking =
-                controllerService.getTotalRisks(vehicles, events, fines);
+                cityService.getTotalRisks(vehicles, events, fines);
 
         System.out.println("Top 5 Vehicles:");
         int pos = 1;
@@ -91,7 +91,7 @@ public class ConsoleController {
 
     private void subpunct7() {
         System.out.println("\n===== Unterpunkt 7 =====");
-        controllerService.calculateReport();
+        cityService.calculateReport();
     }
 
 }
