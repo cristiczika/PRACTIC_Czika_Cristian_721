@@ -40,4 +40,8 @@ public class ControllerService {
         return vehicleRepository.getAllVehicles().stream().sorted(Comparator.comparing(Vehicle::getOwnerCity).thenComparingInt(Vehicle::getId)).toList();
     }
 
+    public void saveVehicles() {
+        vehicleRepository.saveVehicles(sortByOwnerCity());
+    }
+
 }

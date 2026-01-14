@@ -19,6 +19,7 @@ public class ConsoleController {
         subpunct1();
         subpunct2();
         subpunct3();
+        subpunct4();
     }
 
     private void subpunct1() {
@@ -47,6 +48,10 @@ public class ConsoleController {
     private void subpunct3() {
         System.out.println("\n===== Unterpunkt 3 =====");
         controllerService.sortByOwnerCity().forEach(System.out::println);
+    }
+
+    private void subpunct4() {
+        controllerService.saveVehicles();
     }
 
 }

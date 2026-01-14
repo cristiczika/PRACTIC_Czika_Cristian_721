@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Vehicle;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,18 @@ public class VehicleRepository {
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
+        }
+    }
+
+    public void saveVehicles(List<Vehicle> vehicles) {
+        try (FileWriter writer = new FileWriter("src/data/vehicles_sorted.txt")) {
+
+            for (Vehicle vehicle : vehicles) {
+                writer.write(vehicle.toString() + "\n");
+            }
+
+        }catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
